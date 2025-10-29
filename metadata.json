@@ -1,0 +1,5 @@
+{
+  "name": "Small Business Financial Health Analyzer",
+  "description": "An application for small business owners to input their financial data and receive an AI-powered assessment of their business's financial health compared to industry standards.",
+  "requestFramePermissions": []
+}
