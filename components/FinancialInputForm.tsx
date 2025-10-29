@@ -26,6 +26,8 @@ const TrashIcon: React.FC<TrashIconProps> = ({ className }) => (
 interface FinancialInputFormProps {
   industry: string;
   setIndustry: (industry: string) => void;
+  period: string;
+  setPeriod: (period: string) => void;
   financialData: FinancialEntry[];
   setFinancialData: (data: FinancialEntry[]) => void;
   onSubmit: (e: React.FormEvent) => void;
@@ -35,6 +37,8 @@ interface FinancialInputFormProps {
 const FinancialInputForm: React.FC<FinancialInputFormProps> = ({
   industry,
   setIndustry,
+  period,
+  setPeriod,
   financialData,
   setFinancialData,
   onSubmit,
@@ -56,6 +60,8 @@ const FinancialInputForm: React.FC<FinancialInputFormProps> = ({
       setFinancialData(financialData.filter(entry => entry.id !== id));
     }
   };
+  
+  const timePeriods = ['Annual', 'Quarterly', 'Monthly'];
 
   return (
     <form onSubmit={onSubmit} className="space-y-8">
@@ -71,10 +77,31 @@ const FinancialInputForm: React.FC<FinancialInputFormProps> = ({
           required
         />
       </div>
+      
+      <div>
+        <h2 className="text-xl font-semibold text-slate-700 mb-2">2. Time Period</h2>
+        <p className="text-sm text-slate-500 mb-4">Select the time frame this financial data represents.</p>
+        <div className="flex space-x-2 rounded-lg bg-slate-100 p-1">
+          {timePeriods.map((p) => (
+            <button
+              key={p}
+              type="button"
+              onClick={() => setPeriod(p)}
+              className={`w-full font-medium py-2.5 text-sm leading-5 rounded-lg transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-100 focus:ring-indigo-500 ${
+                period === p
+                  ? 'bg-white text-indigo-700 shadow'
+                  : 'text-slate-600 hover:bg-white/50 hover:text-indigo-600'
+              }`}
+            >
+              {p}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div>
-        <h2 className="text-xl font-semibold text-slate-700 mb-2">2. Financial Data</h2>
-        <p className="text-sm text-slate-500 mb-4">Enter your key financial metrics for a specific period (e.g., annually, quarterly). Add as many categories as you need.</p>
+        <h2 className="text-xl font-semibold text-slate-700 mb-2">3. Financial Data</h2>
+        <p className="text-sm text-slate-500 mb-4">Enter your key financial metrics for the selected period. Add as many categories as you need.</p>
         <div className="space-y-4">
           {financialData.map((entry, index) => (
             <div key={entry.id} className="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 items-center animate-fade-in">
